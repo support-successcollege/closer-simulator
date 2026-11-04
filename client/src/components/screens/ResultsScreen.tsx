@@ -19,6 +19,11 @@ function getScoreClass(score: number) {
   return { label: "דורש שיפור", color: "var(--destructive)", line: "var(--destructive)" };
 }
 
+/** Ring radius and circumference. r=54 in a 120 viewBox leaves room
+ *  for the 8px stroke without clipping. */
+const RING_R = 54;
+const RING_C = 2 * Math.PI * RING_R;
+
 export default function ResultsScreen() {
   const { currentSession, setScreen, trainingConfig } = useApp();
   const [displayScore, setDisplayScore] = useState(0);
@@ -72,6 +77,7 @@ export default function ResultsScreen() {
   }
 
   const totalQ = currentSession.questions.length;
+  const ringOffset = RING_C * (1 - displayScore / 100);
   const correctCount = currentSession.answers.filter(a => a.isCorrect).length;
   const wrongCount = Math.max(0, totalQ - correctCount);
   const avgTime = currentSession.answers.length > 0
@@ -90,25 +96,48 @@ export default function ResultsScreen() {
             תוצאות · {currentSession.arenaName} · {currentSession.mode === "full" ? "מבחן מלא" : currentSession.mode === "quick" ? "אימון מהיר" : "חזרה על טעויות"}
           </p>
 
-          <div className="flex items-end justify-between gap-6 flex-wrap mb-4">
-            <span
-              className="score-number t-numeric leading-none"
-              style={{ fontSize: "clamp(3.5rem, 12vw, 6rem)", fontWeight: 500, color: scoreInfo.color }}
-            >
-              {displayScore}%
-            </span>
-            <h2 className="t-title pb-2">{scoreInfo.label}</h2>
-          </div>
+          {/* The score ring. A session's result is the one moment in the
+              app that earns a flourish, and a number alone gave it none.
+              The ring reads the score before the digits are parsed:
+              how much of the circle is filled IS the result.
 
-          <div className="progress-bar-track" role="presentation">
-            <div
-              className="progress-bar-fill"
-              style={{
-                width: `${score}%`,
-                background: scoreInfo.color,
-                transition: "width 1.2s var(--ease-settle) 0.2s",
-              }}
-            />
+              The figure stays the primary carrier — it counts up inside
+              the ring — so nothing is communicated by the drawing alone
+              and a reader with prefers-reduced-motion loses no
+              information, only the animation. */}
+          <div className="flex items-center gap-6 flex-wrap mb-4">
+            <div className="score-ring" role="img" aria-label={`ציון ${score} מתוך 100`}>
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle className="score-ring-track" cx="60" cy="60" r={RING_R} />
+                <circle
+                  className="score-ring-value"
+                  cx="60"
+                  cy="60"
+                  r={RING_R}
+                  stroke={scoreInfo.color}
+                  strokeDasharray={RING_C}
+                  style={{
+                    strokeDashoffset: reduceMotion
+                      ? RING_C * (1 - score / 100)
+                      : ringOffset,
+                  }}
+                />
+              </svg>
+              <span
+                className="score-ring-figure t-numeric"
+                style={{ color: scoreInfo.color }}
+              >
+                {displayScore}
+                <span className="score-ring-unit">%</span>
+              </span>
+            </div>
+
+            <div className="min-w-0">
+              <h2 className="t-title">{scoreInfo.label}</h2>
+              <p className="text-sm mt-1" style={{ color: "var(--text-secondary)" }}>
+                {correctCount} מתוך {totalQ} תשובות נכונות
+              </p>
+            </div>
           </div>
         </div>
       </div>

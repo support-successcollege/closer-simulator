@@ -169,9 +169,9 @@ export default function ManagerScreen() {
             <div className="grid grid-cols-2 gap-3">
               {[
                 { label: "חברי צוות", value: stats.totalMembers.toString(), icon: Users, color: "var(--primary)" },
-                { label: "פעילים", value: stats.activeThisWeek.toString(), icon: TrendingUp, color: "var(--success)" },
-                { label: "ממוצע צוות", value: `${stats.avgTeamScore}%`, icon: Award, color: "var(--warning)" },
-                { label: "סה\"כ מפגשים", value: stats.totalSessions.toString(), icon: Clock, color: "var(--destructive)" },
+                { label: "פעילים", value: stats.activeThisWeek.toString(), icon: TrendingUp, color: "var(--accent)" },
+                { label: "ממוצע צוות", value: `${stats.avgTeamScore}%`, icon: Award, color: "var(--accent-2)" },
+                { label: "סה\"כ מפגשים", value: stats.totalSessions.toString(), icon: Clock, color: "var(--text-tertiary)" },
               ].map(({ label, value, icon: Icon, color }) => (
                 <div key={label} className="stat-card">
                   <div className="flex items-center gap-2 mb-2"><Icon size={14} style={{ color }} /><span className="text-xs" style={{ color: "var(--muted-foreground)" }}>{label}</span></div>
@@ -460,7 +460,7 @@ function ContentTab({
       <div className="rounded-xl p-4" style={{ background: "var(--tf-surface)", border: "1px solid var(--tf-border)" }}>
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
           <h3 className="font-bold text-sm" style={{ color: "var(--foreground)" }}>עריכת JSON</h3>
-          <span className="text-xs font-semibold" style={{ color: questionBankLoaded ? "var(--success)" : "var(--warning)" }}>
+          <span className="text-xs font-semibold" style={{ color: questionBankLoaded ? "var(--accent)" : "var(--warning)" }}>
             {questionBankLoaded ? "מאגר פעיל" : "מצב דמו"}
           </span>
         </div>
@@ -656,7 +656,7 @@ function PublishPanel() {
         <h3 className="section-head-title">פרסום לכל התלמידים</h3>
         <span
           className="section-head-tail eyebrow"
-          style={{ color: bankSource === "shared" ? "var(--success)" : "var(--muted-foreground)" }}
+          style={{ color: bankSource === "shared" ? "var(--accent)" : "var(--muted-foreground)" }}
         >
           {bankSource === "shared" ? "פעיל" : sharedBankExists ? "מוסתר" : "לא פורסם"}
         </span>

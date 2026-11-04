@@ -1382,3 +1382,76 @@ html[data-theme="light"] {
     color: var(--destructive-foreground);
   }
 }
+
+/* ── Score ring ──
+   DESIGN.md §7, signature moment #4. The results screen is the payoff
+   of a session and was showing a flat number; the ring lets the result
+   register before the digits are read.
+
+   The figure inside counts to the same value, so the drawing never
+   carries information on its own. */
+@layer components {
+  .score-ring {
+    position: relative;
+    width: clamp(132px, 26vw, 168px);
+    aspect-ratio: 1;
+    flex-shrink: 0;
+  }
+
+  .score-ring svg {
+    width: 100%;
+    height: 100%;
+    /* Start the stroke at twelve o'clock and run it counter-clockwise,
+       which is the direction an RTL reader expects progress to grow. */
+    transform: rotate(-90deg) scaleX(-1);
+  }
+
+  .score-ring-track {
+    fill: none;
+    stroke: var(--surface-active);
+    stroke-width: 8;
+  }
+
+  .score-ring-value {
+    fill: none;
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition:
+      stroke-dashoffset 900ms var(--ease-settle) 150ms,
+      stroke var(--dur-base) var(--ease-settle);
+  }
+
+  .score-ring-figure {
+    position: absolute;
+    inset: 0;
+    /* Flex row, not grid: under place-items the "%" became its own
+       grid row and dropped below the number. Centred rather than
+       baseline-aligned — with inset:0 a baseline resolves near the
+       top of the box and floats the whole figure off centre. */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(2rem, 6vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .score-ring-unit {
+    font-size: 0.45em;
+    font-weight: 500;
+    margin-inline-start: 0.1em;
+    /* Centred with the digits, not aligned to the flex container:
+       the container spans the whole ring, so flex-start pinned the
+       unit to the ring's top edge instead of the number's. The small
+       translate lifts it to sit against the cap height. */
+    transform: translateY(-0.55em);
+    opacity: 0.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .score-ring-value {
+    transition: none;
+  }
+}
