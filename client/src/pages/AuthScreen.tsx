@@ -15,6 +15,7 @@ import { validatePasswordStrength } from "@/lib/auth";
 import { toast } from "sonner";
 import { ArrowRight, Eye, EyeOff, ShieldAlert } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
+import CloseraBadge from "@/components/CloseraBadge";
 
 type Stage = "credentials" | "rotate-password";
 
@@ -86,48 +87,55 @@ export default function AuthScreen() {
 
   return (
     <div className="app-shell" style={{ direction: "rtl" }}>
-      {/* Left panel — an ink plate carrying the masthead. The
-          photograph it replaces was doing nothing the type cannot,
-          and it fought the paper on the other half of the split. */}
+      {/* Hero panel — the right-hand plate in RTL. Wordmark on top,
+          the pitch centred in the remaining height, the Closera badge
+          at the foot. It used to push the pitch to the bottom edge,
+          which left the upper two thirds empty. */}
       <div
-        className="hidden lg:flex flex-col justify-between flex-1"
-        style={{ background: "#16171a", color: "#f2f1ed" }}
+        className="hidden lg:flex flex-col flex-1"
+        style={{ background: "var(--surface)", borderInlineEnd: "1px solid var(--border)" }}
       >
         <div className="p-10">
-          <Wordmark size="lg" tone="onDark" />
+          <Wordmark size="lg" />
         </div>
 
-        <div className="p-10 pb-14">
-          <p className="eyebrow mb-5" style={{ color: "#8d8f95" }}>סימולטור אימון מכירות</p>
-          <h1 className="t-display mb-5" style={{ fontSize: "clamp(2.4rem, 3.4vw, 3.4rem)" }}>
-            אמן את כישורי
-            <br />
-            המכירות שלך
-          </h1>
-          <p className="text-base mb-9 max-w-md" style={{ color: "#b9bbc0" }}>
-            שאלות מהשטח, משוב מיידי אחרי כל תשובה, וניתוח ביצועים לאורך זמן.
-          </p>
+        <div className="flex-1 flex flex-col justify-center px-10">
+          <div className="max-w-lg">
+            <p className="eyebrow mb-5">סימולטור אימון מכירות</p>
+            <h1 className="t-display mb-5" style={{ fontSize: "clamp(2.4rem, 3.4vw, 3.4rem)" }}>
+              אמן את כישורי
+              <br />
+              המכירות שלך
+            </h1>
+            <p className="text-base mb-9" style={{ color: "var(--text-secondary)" }}>
+              שאלות מהשטח, משוב מיידי אחרי כל תשובה, וניתוח ביצועים לאורך זמן.
+            </p>
 
-          {/* A numbered list under rules — the same device the app
-              uses for its sections. */}
-          <div style={{ borderTop: "1px solid #33363c" }}>
-            {[
-              "זירות התמחות מרובות",
-              "מעקב ביצועים בזמן אמת",
-              "משוב מיידי אחרי כל תשובה",
-            ].map((text, i) => (
-              <div
-                key={text}
-                className="flex items-baseline gap-4 py-3"
-                style={{ borderBottom: "1px solid #33363c" }}
-              >
-                <span className="t-numeric text-xs" style={{ color: "#8d8f95" }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="text-sm">{text}</span>
-              </div>
-            ))}
+            {/* A numbered list under rules — the same device the app
+                uses for its sections. */}
+            <div style={{ borderTop: "1px solid var(--border)" }}>
+              {[
+                "זירות התמחות מרובות",
+                "מעקב ביצועים בזמן אמת",
+                "משוב מיידי אחרי כל תשובה",
+              ].map((text, i) => (
+                <div
+                  key={text}
+                  className="flex items-baseline gap-4 py-3"
+                  style={{ borderBottom: "1px solid var(--border)" }}
+                >
+                  <span className="t-numeric text-xs" style={{ color: "var(--text-tertiary)" }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-sm">{text}</span>
+                </div>
+              ))}
+            </div>
           </div>
+        </div>
+
+        <div className="px-10 pb-8">
+          <CloseraBadge height={32} />
         </div>
       </div>
 
@@ -233,6 +241,11 @@ export default function AuthScreen() {
             <p className="text-center text-xs mt-6" style={{ color: "var(--muted-foreground)" }}>
               ההתחברות מתבצעת באמצעות משתמשים שנוצרו במערכת
             </p>
+
+            {/* The hero panel carries the badge on wide screens. */}
+            <div className="lg:hidden mt-8 flex justify-center">
+              <CloseraBadge />
+            </div>
           </>
         ) : (
           <>

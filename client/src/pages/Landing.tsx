@@ -13,6 +13,7 @@ import { useLocation } from "wouter";
 import { ChevronLeft, Check, Layers, Zap, RotateCcw, LineChart } from "lucide-react";
 import { useApp } from "@/contexts/AppContext";
 import Wordmark from "@/components/Wordmark";
+import CloseraBadge from "@/components/CloseraBadge";
 
 const STEPS = [
   {
@@ -91,7 +92,7 @@ export default function Landing() {
         {/* ── Hero ── */}
         <section className="landing-measure landing-hero screen-enter">
           <div className="min-w-0">
-            <p className="eyebrow mb-4">סימולטור אימון מכירות</p>
+            <CloseraBadge height={28} className="mb-5" />
             <h1 className="t-display mb-5">
               מתאמנים על שיחת המכירה
               <br />
@@ -216,8 +217,11 @@ export default function Landing() {
       </main>
 
       <footer className="landing-measure landing-footer">
-        <Wordmark size="sm" />
-        <span>סימולטור אימון מכירות</span>
+        <div className="flex items-center gap-3">
+          <Wordmark size="sm" />
+          <span>סימולטור אימון מכירות</span>
+        </div>
+        <CloseraBadge />
       </footer>
     </div>
   );
