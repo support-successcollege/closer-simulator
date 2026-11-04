@@ -83,233 +83,331 @@
   --color-warning-foreground: var(--warning-foreground);
 }
 
-/* ── Light theme (default) ──
-   Bone paper, ink type. The paper is a shade off white so plates
-   set on top of it can be pure white and still read as a separate
-   sheet without needing a shadow. */
+/* ── Dark theme (default) ──
+   See DESIGN.md §2. Four layers of near-black carry the depth that
+   borders used to carry, and one electric accent marks everything
+   that can be acted on. Green and red are spoken for by answer
+   feedback and never appear as decoration.
+
+   Token NAMES are inherited from the previous system so components
+   keep resolving; the values are what changed. New names from
+   DESIGN.md are defined alongside them. */
 :root {
-  /* Square corners are the single loudest signal of this system.
-     Everything downstream inherits from here. */
-  --radius: 0px;
+  /* Rounded, not square. The previous system's 0px corners were the
+     loudest part of its editorial voice and the first thing to go. */
+  --radius: 10px;
 
-  --paper: #f2f1ed;
-  --plate: #ffffff;
+  /* Depth ladder */
+  --bg: #09090c;
+  --surface: #121218;
+  --surface-alt: #17171f;
+  --surface-hover: #1e1e28;
+  --surface-active: #262633;
 
-  --background: var(--paper);
-  --foreground: #16171a;
-  --card: var(--plate);
-  --card-foreground: #16171a;
-  --popover: var(--plate);
-  --popover-foreground: #16171a;
+  --paper: var(--bg);
+  --plate: var(--surface-alt);
 
-  /* The primary action is ink, not a colour. A filled black block
-     is the strongest thing on a page of type, which is exactly
-     what a primary button should be. */
-  --primary: #16171a;
-  --primary-foreground: #f7f6f3;
+  --background: var(--bg);
+  --foreground: #f4f4f7;
+  --card: var(--surface-alt);
+  --card-foreground: #f4f4f7;
+  --popover: var(--surface-alt);
+  --popover-foreground: #f4f4f7;
 
-  --secondary: #e6e4de;
-  --secondary-foreground: #16171a;
+  /* Text ladder — see DESIGN.md §2 for measured contrast */
+  --text: #f4f4f7;
+  --text-secondary: #a8a8b8;
+  --text-tertiary: #6e6e80;
 
-  --muted: #e6e4de;
-  --muted-foreground: #5f6169;
+  /* The primary action is the brand colour, not ink. On near-black
+     a filled grey block reads as disabled, not as the main CTA. */
+  --primary: #7c5cff;
+  --primary-foreground: #ffffff;
 
-  /* Ink blue: the one accent. Marks what is live, selected or
-     navigable, and nothing else. */
-  --accent: #1f3bcc;
+  --secondary: var(--surface-active);
+  --secondary-foreground: #f4f4f7;
+
+  --muted: var(--surface-hover);
+  --muted-foreground: #a8a8b8;
+
+  /* Electric violet. Deliberately not red (Netflix) and not green
+     (Spotify): both are reserved for answer feedback, and a brand
+     colour colliding with the scoring semantics makes the screen
+     unreadable at a glance. */
+  --accent: #7c5cff;
+  --accent-hover: #8f74ff;
+  --accent-active: #6a49f2;
   --accent-foreground: #ffffff;
+  --accent-weak: rgb(124 92 255 / 0.12);
+  --accent-ring: rgb(124 92 255 / 0.40);
+
+  /* Data only — charts, progress, secondary figures. Never a CTA. */
+  --accent-2: #22d3ee;
+  --accent-2-weak: rgb(34 211 238 / 0.12);
 
   /* Reserved for a wrong answer. */
-  --destructive: #b3261e;
+  --destructive: #ff453a;
   --destructive-foreground: #ffffff;
+  --danger: #ff453a;
 
   /* Reserved for a correct answer. */
-  --success: #146b4a;
-  --success-foreground: #ffffff;
+  --success: #30d158;
+  --success-foreground: #06130a;
 
-  /* Reserved for a caution, a timeout, an expiring clock. */
-  --warning: #8a5a08;
-  --warning-foreground: #ffffff;
+  /* Reserved for an expiring clock. Nothing else. */
+  --warning: #ffd60a;
+  --warning-foreground: #1a1500;
 
-  --border: #dbd9d2;
-  --input: #c8c5bc;
-  --ring: #1f3bcc;
+  --border: rgb(255 255 255 / 0.08);
+  --border-strong: rgb(255 255 255 / 0.14);
+  --border-hover: rgb(255 255 255 / 0.22);
+  --input: rgb(255 255 255 / 0.14);
+  --ring: #7c5cff;
 
-  /* Charts read as an ink scale with one accent, the way a printed
-     figure would — not as a rainbow. */
-  --chart-1: #1f3bcc;
-  --chart-2: #16171a;
-  --chart-3: #5f6169;
-  --chart-4: #9a9c9f;
-  --chart-5: #c8c5bc;
+  /* RGB helpers for rgb(... / alpha) composition */
+  --bg-rgb: 9 9 12;
+  --surface-rgb: 18 18 24;
+  --text-rgb: 244 244 247;
+  --accent-rgb: 124 92 255;
+  --accent-2-rgb: 34 211 238;
+  --success-rgb: 48 209 88;
+  --danger-rgb: 255 69 58;
+  --warning-rgb: 255 214 10;
 
-  --sidebar: var(--plate);
-  --sidebar-foreground: #4a4c52;
-  --sidebar-primary: #16171a;
-  --sidebar-primary-foreground: #f7f6f3;
-  --sidebar-accent: #ecebe5;
-  --sidebar-accent-foreground: #16171a;
-  --sidebar-border: #dbd9d2;
-  --sidebar-ring: #1f3bcc;
+  /* Charts read as accent → cyan → greys, not a rainbow. */
+  --chart-1: #7c5cff;
+  --chart-2: #22d3ee;
+  --chart-3: #a8a8b8;
+  --chart-4: #6e6e80;
+  --chart-5: #3a3a48;
 
-  --tf-surface: var(--plate);
-  --tf-surface-soft: #faf9f6;
-  --tf-border: #dedcd5;
-  --tf-border-strong: #16171a;
-  --tf-accent-line: #1f3bcc;
-  --tf-radius: 0px;
-  --tf-radius-sm: 0px;
-  --tf-shadow: none;
+  --sidebar: var(--surface);
+  --sidebar-foreground: #a8a8b8;
+  --sidebar-primary: #7c5cff;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--surface-hover);
+  --sidebar-accent-foreground: #f4f4f7;
+  --sidebar-border: rgb(255 255 255 / 0.08);
+  --sidebar-ring: #7c5cff;
 
-  /* Rules. The hairline is structure; the heavy rule is a heading
-     underline and is always ink. */
+  --tf-surface: var(--surface-alt);
+  --tf-surface-soft: var(--surface);
+  --tf-border: rgb(255 255 255 / 0.08);
+  --tf-border-strong: rgb(255 255 255 / 0.14);
+  --tf-accent-line: #7c5cff;
+  --tf-radius: 12px;
+  --tf-radius-sm: 8px;
+
   --rule-hair: 1px solid var(--tf-border);
-  --rule-heavy: 2px solid var(--foreground);
+  --rule-heavy: 1px solid var(--border-strong);
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --safe-left: env(safe-area-inset-left, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
 
-  /* ── Semantic tints ──
-     Flat washes, no gradients. The "primary" tints are drawn from
-     the accent rather than from --primary: --primary is ink here,
-     and a grey wash cannot carry a status notice. */
-  --tint-primary-weak: color-mix(in srgb, var(--accent) 6%, transparent);
-  --tint-primary: color-mix(in srgb, var(--accent) 10%, transparent);
-  --tint-primary-strong: color-mix(in srgb, var(--accent) 16%, transparent);
-  --line-primary: color-mix(in srgb, var(--accent) 30%, transparent);
+  /* ── Semantic tints ── */
+  --tint-primary-weak: rgb(124 92 255 / 0.08);
+  --tint-primary: rgb(124 92 255 / 0.12);
+  --tint-primary-strong: rgb(124 92 255 / 0.20);
+  --line-primary: rgb(124 92 255 / 0.40);
 
-  --tint-success-weak: color-mix(in srgb, var(--success) 7%, transparent);
-  --tint-success: color-mix(in srgb, var(--success) 12%, transparent);
-  --tint-success-strong: color-mix(in srgb, var(--success) 18%, transparent);
-  --line-success: color-mix(in srgb, var(--success) 32%, transparent);
+  --tint-success-weak: rgb(48 209 88 / 0.10);
+  --tint-success: rgb(48 209 88 / 0.14);
+  --tint-success-strong: rgb(48 209 88 / 0.22);
+  --line-success: rgb(48 209 88 / 0.35);
 
-  --tint-danger-weak: color-mix(in srgb, var(--destructive) 7%, transparent);
-  --tint-danger: color-mix(in srgb, var(--destructive) 12%, transparent);
-  --tint-danger-strong: color-mix(in srgb, var(--destructive) 18%, transparent);
-  --line-danger: color-mix(in srgb, var(--destructive) 32%, transparent);
+  --tint-danger-weak: rgb(255 69 58 / 0.10);
+  --tint-danger: rgb(255 69 58 / 0.14);
+  --tint-danger-strong: rgb(255 69 58 / 0.22);
+  --line-danger: rgb(255 69 58 / 0.35);
 
-  --tint-accent-weak: color-mix(in srgb, var(--foreground) 4%, transparent);
-  --tint-accent: color-mix(in srgb, var(--foreground) 7%, transparent);
-  --line-accent: var(--tf-border);
+  --tint-accent-weak: rgb(34 211 238 / 0.10);
+  --tint-accent: rgb(34 211 238 / 0.14);
+  --line-accent: rgb(34 211 238 / 0.35);
+
+  --tint-warning-weak: rgb(255 214 10 / 0.12);
 
   /* ── Elevation ──
-     There is none. These tokens survive only so components that
-     still reference them resolve to nothing rather than to a
-     stray shadow from the previous system. */
-  --glow-primary: none;
-  --glow-primary-soft: none;
-  --glow-success: none;
-  --shadow-raised: none;
-  --shadow-float: none;
+     On near-black a black shadow is nearly invisible, so the surface
+     ladder does most of the separating and these only lift floating
+     elements. Glow is a state marker, never permanent decoration. */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.40);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 0.50);
+  --shadow-lg: 0 12px 40px rgb(0 0 0 / 0.60);
+  --shadow-raised: var(--shadow-sm);
+  --shadow-float: var(--shadow-lg);
   --shadow-card: none;
-  --shadow-card-hover: none;
+  --shadow-card-hover: var(--shadow-md);
+  --glow-primary: 0 0 24px rgb(124 92 255 / 0.35);
+  --glow-primary-soft: 0 0 16px rgb(124 92 255 / 0.22);
+  --glow-success: 0 0 28px rgb(48 209 88 / 0.28);
 
-  /* ── Masthead ──
-     The old photographic hero bands are gone; a masthead is set
-     type on paper, closed by a heavy rule. */
+  /* The one decorative gradient. Wordmark, score ring, CTA glow. */
+  --grad-brand: linear-gradient(135deg, #7c5cff 0%, #22d3ee 100%);
+
+  /* ── Hero / masthead ── */
   --hero-ground: transparent;
-  --hero-ink: var(--foreground);
-  --hero-ink-soft: var(--muted-foreground);
-  --hero-track: color-mix(in srgb, var(--foreground) 14%, transparent);
+  --hero-ink: var(--text);
+  --hero-ink-soft: var(--text-secondary);
+  --hero-track: rgb(255 255 255 / 0.10);
 
   /* ── Material chrome ──
-     Still translucent so content passes under a floating bar, but
-     the bright inner edge is gone: on paper the separation is a
-     hairline. */
-  --material-chrome: color-mix(in srgb, var(--background) 82%, transparent);
-  --material-blur: saturate(105%) blur(16px);
+     Capped at 12px blur per DESIGN.md §7; anything heavier costs
+     frames on every scroll of a long list. */
+  --material-chrome: rgb(9 9 12 / 0.82);
+  --material-blur: saturate(120%) blur(12px);
 
-  /* ── Type ── */
-  --font-display: 'Frank Ruhl Libre', 'Assistant', Georgia, serif;
-  --font-ui: 'Assistant', system-ui, -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  /* ── Type ──
+     No serif anywhere. A display serif set at 24px as body copy was
+     the central failure of the previous system. */
+  --font-display: 'Rubik', 'Heebo', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-ui: 'Heebo', 'Rubik', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
-  /* ── Motion ──
-     Unchanged from the fluid pass: --ease-settle is critically
-     damped, --ease-overshoot carries bounce and is reserved for
-     motion that followed a momentum gesture, --ease-exit mirrors
-     the settle so reversible transitions retrace their path. */
-  --ease-settle: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-overshoot: cubic-bezier(0.34, 1.32, 0.64, 1);
-  --ease-exit: cubic-bezier(1, 0, 0.68, 0.28);
+  /* ── Motion ── */
+  --ease-settle: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
   --dur-press: 90ms;
-  --dur-fast: 180ms;
-  --dur-base: 300ms;
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
   --dur-slow: 400ms;
+  --dur-reveal: 600ms;
 
-  /* Square blocks do not read a scale-down as a press the way a
-     rounded pill does, so the press is shallower and the colour
-     shift does more of the work. */
-  --press-scale: 0.985;
-  --press-scale-lg: 0.995;
+  /* Rounded blocks read a scale-down as a press, so the press can be
+     deeper here than it was under square corners. */
+  --press-scale: 0.97;
+  --press-scale-lg: 0.99;
 }
 
-/* ── Dark theme ──
-   The same page, printed in reverse: ink ground, paper type. The
-   accent lifts because a saturated blue disappears against black. */
-html.dark,
-html[data-theme="dark"] {
-  --paper: #121316;
-  --plate: #191b1f;
+/* ── Light theme ──
+   The same system inverted, not a separate design: identical accent,
+   identical semantics, identical geometry. It exists because the
+   sidebar offers the toggle; dark is the intended default. */
+html[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f7f7fa;
+  --surface-alt: #ffffff;
+  --surface-hover: #f1f1f6;
+  --surface-active: #e7e7ef;
 
-  --background: var(--paper);
-  --foreground: #eceae5;
-  --card: var(--plate);
-  --card-foreground: #eceae5;
-  --popover: var(--plate);
-  --popover-foreground: #eceae5;
+  --paper: var(--bg);
+  --plate: var(--surface-alt);
 
-  --primary: #eceae5;
-  --primary-foreground: #121316;
+  --background: var(--bg);
+  --foreground: #121218;
+  --card: var(--surface-alt);
+  --card-foreground: #121218;
+  --popover: var(--surface-alt);
+  --popover-foreground: #121218;
 
-  --secondary: #24262b;
-  --secondary-foreground: #eceae5;
+  --text: #121218;
+  --text-secondary: #55566a;
+  --text-tertiary: #83849a;
 
-  --muted: #24262b;
-  --muted-foreground: #a2a4ab;
+  /* Deepened so the same violet clears 4.5:1 against white. */
+  --primary: #5b3ce6;
+  --primary-foreground: #ffffff;
+  --accent: #5b3ce6;
+  --accent-hover: #4f31d6;
+  --accent-active: #4428c0;
+  --accent-foreground: #ffffff;
+  --accent-weak: rgb(91 60 230 / 0.10);
+  --accent-ring: rgb(91 60 230 / 0.35);
 
-  --accent: #93a6ff;
-  --accent-foreground: #121316;
+  --accent-2: #0891b2;
+  --accent-2-weak: rgb(8 145 178 / 0.10);
 
-  --destructive: #ff6f61;
-  --destructive-foreground: #121316;
+  --secondary: var(--surface-active);
+  --secondary-foreground: #121218;
+  --muted: var(--surface-hover);
+  --muted-foreground: #55566a;
 
-  --success: #4ec38c;
-  --success-foreground: #121316;
+  --destructive: #d42b1f;
+  --destructive-foreground: #ffffff;
+  --danger: #d42b1f;
+  --success: #117a3d;
+  --success-foreground: #ffffff;
+  --warning: #9a6b00;
+  --warning-foreground: #ffffff;
 
-  --warning: #e0a34a;
-  --warning-foreground: #121316;
+  --border: rgb(18 18 24 / 0.10);
+  --border-strong: rgb(18 18 24 / 0.16);
+  --border-hover: rgb(18 18 24 / 0.28);
+  --input: rgb(18 18 24 / 0.18);
+  --ring: #5b3ce6;
 
-  --border: #2c2f35;
-  --input: #3a3d44;
-  --ring: #93a6ff;
+  --bg-rgb: 255 255 255;
+  --surface-rgb: 247 247 250;
+  --text-rgb: 18 18 24;
+  --accent-rgb: 91 60 230;
+  --accent-2-rgb: 8 145 178;
+  --success-rgb: 17 122 61;
+  --danger-rgb: 212 43 31;
+  --warning-rgb: 154 107 0;
 
-  --chart-1: #93a6ff;
-  --chart-2: #eceae5;
-  --chart-3: #a2a4ab;
-  --chart-4: #6c6f77;
-  --chart-5: #3a3d44;
+  --chart-1: #5b3ce6;
+  --chart-2: #0891b2;
+  --chart-3: #55566a;
+  --chart-4: #83849a;
+  --chart-5: #c9cad6;
 
-  --sidebar: var(--plate);
-  --sidebar-foreground: #a2a4ab;
-  --sidebar-primary: #eceae5;
-  --sidebar-primary-foreground: #121316;
-  --sidebar-accent: #24262b;
-  --sidebar-accent-foreground: #eceae5;
-  --sidebar-border: #2c2f35;
-  --sidebar-ring: #93a6ff;
+  --sidebar: var(--surface);
+  --sidebar-foreground: #55566a;
+  --sidebar-primary: #5b3ce6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--surface-hover);
+  --sidebar-accent-foreground: #121218;
+  --sidebar-border: rgb(18 18 24 / 0.10);
+  --sidebar-ring: #5b3ce6;
 
-  --tf-surface: var(--plate);
-  --tf-surface-soft: #16181b;
-  --tf-border: #2c2f35;
-  --tf-border-strong: #eceae5;
-  --tf-accent-line: #93a6ff;
+  --tf-surface: var(--surface-alt);
+  --tf-surface-soft: var(--surface);
+  --tf-border: rgb(18 18 24 / 0.10);
+  --tf-border-strong: rgb(18 18 24 / 0.16);
+  --tf-accent-line: #5b3ce6;
 
-  --material-chrome: color-mix(in srgb, var(--background) 84%, transparent);
+  --rule-heavy: 1px solid var(--border-strong);
+
+  --tint-primary-weak: rgb(91 60 230 / 0.06);
+  --tint-primary: rgb(91 60 230 / 0.10);
+  --tint-primary-strong: rgb(91 60 230 / 0.16);
+  --line-primary: rgb(91 60 230 / 0.35);
+
+  --tint-success-weak: rgb(17 122 61 / 0.07);
+  --tint-success: rgb(17 122 61 / 0.12);
+  --tint-success-strong: rgb(17 122 61 / 0.18);
+  --line-success: rgb(17 122 61 / 0.32);
+
+  --tint-danger-weak: rgb(212 43 31 / 0.07);
+  --tint-danger: rgb(212 43 31 / 0.12);
+  --tint-danger-strong: rgb(212 43 31 / 0.18);
+  --line-danger: rgb(212 43 31 / 0.32);
+
+  --tint-accent-weak: rgb(8 145 178 / 0.08);
+  --tint-accent: rgb(8 145 178 / 0.12);
+  --line-accent: rgb(8 145 178 / 0.30);
+
+  --tint-warning-weak: rgb(154 107 0 / 0.10);
+
+  /* Shadows do real work on white, where the surface ladder is weak. */
+  --shadow-sm: 0 1px 2px rgb(18 18 24 / 0.06);
+  --shadow-md: 0 4px 16px rgb(18 18 24 / 0.10);
+  --shadow-lg: 0 12px 40px rgb(18 18 24 / 0.14);
+  --shadow-raised: var(--shadow-sm);
+  --shadow-float: var(--shadow-lg);
+  --shadow-card: var(--shadow-sm);
+  --shadow-card-hover: var(--shadow-md);
+  --glow-primary: 0 4px 20px rgb(91 60 230 / 0.28);
+  --glow-primary-soft: 0 2px 12px rgb(91 60 230 / 0.18);
+  --glow-success: 0 4px 20px rgb(17 122 61 / 0.22);
+
+  --grad-brand: linear-gradient(135deg, #5b3ce6 0%, #0891b2 100%);
+
+  --hero-track: rgb(18 18 24 / 0.10);
+  --material-chrome: rgb(255 255 255 / 0.82);
 }
-
 /* ── Base ── */
 @layer base {
   * {
@@ -774,13 +872,15 @@ html[data-theme="dark"] {
      only commits on release, because it cannot be undone. */
   .answer-option {
     width: 100%;
-    padding: 0.9375rem 1.125rem;
-    border: var(--rule-hair);
-    background: var(--tf-surface);
-    color: var(--foreground);
+    min-height: 56px;
+    padding: 1rem 1.125rem;
+    border: 1px solid var(--border);
+    border-radius: var(--tf-radius);
+    background: var(--surface-alt);
+    color: var(--text-secondary);
     text-align: right;
     font-family: var(--font-ui);
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.55;
     cursor: pointer;
@@ -788,37 +888,58 @@ html[data-theme="dark"] {
     transition:
       border-color var(--dur-fast) var(--ease-settle),
       background-color var(--dur-fast) var(--ease-settle),
+      color var(--dur-fast) var(--ease-settle),
       transform var(--dur-press) var(--ease-settle);
   }
 
-  .answer-option:hover:not(:disabled) {
-    border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 5%, var(--tf-surface));
+  /* Hover is gated: on touch it sticks after a tap and leaves the
+     previous answer looking live while the next question loads. */
+  @media (hover: hover) {
+    .answer-option:hover:not(:disabled) {
+      border-color: var(--border-hover);
+      background: var(--surface-hover);
+      color: var(--text);
+      /* RTL: drifts toward the reader's side of the row. */
+      transform: translateX(-2px);
+    }
   }
 
   .answer-option:active:not(:disabled) {
     transform: scale(var(--press-scale-lg));
-    background: color-mix(in srgb, var(--accent) 10%, var(--tf-surface));
+    background: var(--surface-active);
   }
 
-  .answer-option.selected-correct {
-    border-color: var(--success);
+  .answer-option:focus-visible {
+    outline: 2px solid var(--accent-ring);
+    outline-offset: 2px;
+  }
+
+  /* ── Resolved states ──
+     Colour alone does not carry the verdict: the badge swaps to an
+     icon at the same time, so the answer is still legible without
+     colour vision. */
+  .answer-option.selected-correct,
+  .answer-option.correct-reveal {
+    border-color: var(--line-success);
     background: var(--tint-success);
-    color: var(--success);
+    color: var(--text);
   }
 
   .answer-option.selected-wrong {
-    border-color: var(--destructive);
+    border-color: var(--line-danger);
     background: var(--tint-danger);
-    color: var(--destructive);
+    color: var(--text);
   }
 
-  .answer-option.correct-reveal {
-    border-color: var(--success);
-    background: var(--tint-success-weak);
+  .answer-option:disabled {
+    cursor: default;
+    transform: none;
   }
 
-  .answer-option:disabled { cursor: default; }
+  /* An unresolved option fades back so the two that matter stand out. */
+  .answer-option:disabled:not(.selected-correct):not(.correct-reveal):not(.selected-wrong) {
+    opacity: 0.45;
+  }
 
   /* Wizard steps read as a numbered run of tabs under a rule. */
   .wizard-step-btn {
@@ -1205,4 +1326,59 @@ html[data-theme="dark"] {
   .answer-option,
   .stat-card,
   .surface-card { border-width: 2px; }
+}
+
+/* ── Quiz canvas ──
+   The question block is centred in whatever height is left between
+   the two chrome bars, instead of being pinned to the top with half
+   the screen left empty beneath it.
+
+   `margin-block: auto` rather than `justify-content: center`: on a
+   scrolling flex column, centring clips the top of content that
+   overflows, whereas auto margins collapse and let it scroll. */
+@layer components {
+  .quiz-canvas {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .quiz-canvas > .screen-form {
+    margin-block: auto;
+  }
+
+  /* ── Answer index badge ── */
+  .answer-badge {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-tertiary);
+    background: var(--surface-active);
+    border-radius: var(--tf-radius-sm);
+    transition:
+      background var(--dur-fast) var(--ease-settle),
+      color var(--dur-fast) var(--ease-settle);
+  }
+
+  @media (hover: hover) {
+    .answer-option:hover:not(:disabled) .answer-badge {
+      background: var(--tint-primary-strong);
+      color: var(--accent);
+    }
+  }
+
+  .answer-badge.is-correct {
+    background: var(--success);
+    color: var(--success-foreground);
+  }
+
+  .answer-badge.is-wrong {
+    background: var(--destructive);
+    color: var(--destructive-foreground);
+  }
 }

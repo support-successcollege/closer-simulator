@@ -21,6 +21,9 @@ import { ChevronLeft, Clock, AlertTriangle, CheckCircle2, XCircle, FlaskConical,
 const CHROME_TOP_FALLBACK = 92;
 const CHROME_BOTTOM_FALLBACK = 92;
 
+/** Option markers, in Hebrew alphabetical order. */
+const OPTION_LETTERS = ["א", "ב", "ג", "ד", "ה", "ו"];
+
 export default function QuizScreen() {
   const {
     currentSession,
@@ -114,13 +117,13 @@ export default function QuizScreen() {
   const timeLimit = trainingConfig.timePerQuestion;
   const timePct = timeLimit > 0 ? (timeLeft / timeLimit) * 100 : 100;
   const timerClass = timePct > 50 ? "timer-normal" : timePct > 25 ? "timer-warning" : "timer-danger";
-  const timerColor = timePct > 50 ? "var(--foreground)" : timePct > 25 ? "var(--warning)" : "var(--destructive)";
+  const timerColor = timePct > 50 ? "var(--accent)" : timePct > 25 ? "var(--warning)" : "var(--destructive)";
 
   return (
     <div className="h-full relative overflow-hidden" style={{ direction: "rtl", background: "var(--background)" }}>
       {/* Question area — scrolls beneath the chrome at both ends. */}
       <div
-        className="absolute inset-0 overflow-y-auto px-4 sm:px-6"
+        className="absolute inset-0 overflow-y-auto px-4 sm:px-6 quiz-canvas"
         style={{
           paddingTop: topInset,
           paddingBottom: isShowingFeedback ? CHROME_BOTTOM_FALLBACK : 24,
@@ -141,11 +144,14 @@ export default function QuizScreen() {
             </span>
           )}
           {currentQuestion.difficulty && (
+            /* Difficulty is graded on the neutral→accent ramp, never on
+               green/amber/red: those three are the answer verdict, and a
+               green "קל" badge reads as "you got it right". */
             <span
               className="badge-pill"
               style={{
-                color: currentQuestion.difficulty === "easy" ? "var(--success)" :
-                  currentQuestion.difficulty === "medium" ? "var(--warning)" : "var(--destructive)",
+                color: currentQuestion.difficulty === "hard" ? "var(--accent)" : "var(--text-tertiary)",
+                borderColor: currentQuestion.difficulty === "hard" ? "var(--line-primary)" : undefined,
               }}
             >
               {currentQuestion.difficulty === "easy" ? "קל" : currentQuestion.difficulty === "medium" ? "בינוני" : "קשה"}
@@ -183,24 +189,19 @@ export default function QuizScreen() {
                 onClick={() => handleSelect(index)}
                 disabled={isShowingFeedback || selectedIndex !== null}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3.5">
                   <span
-                    className="w-6 h-6 flex items-center justify-center text-xs flex-shrink-0 t-numeric"
-                    style={{
-                      border: "1px solid currentColor",
-                      color: isRevealedCorrect
-                        ? "var(--success)"
-                        : isRevealedWrong
-                          ? "var(--destructive)"
-                          : "var(--muted-foreground)",
-                    }}
+                    className={`answer-badge${isRevealedCorrect ? " is-correct" : ""}${isRevealedWrong ? " is-wrong" : ""}`}
                   >
                     {isRevealedCorrect ? (
-                      <CheckCircle2 size={13} />
+                      <CheckCircle2 size={15} />
                     ) : isRevealedWrong ? (
-                      <XCircle size={13} />
+                      <XCircle size={15} />
                     ) : (
-                      String.fromCharCode(65 + index) // A, B, C, D
+                      // Hebrew letters, not A/B/C/D: a Latin marker in an
+                      // RTL list makes the eye switch reading direction on
+                      // every row.
+                      OPTION_LETTERS[index] ?? index + 1
                     )}
                   </span>
                   <span className="flex-1 text-right">{option}</span>
@@ -269,10 +270,13 @@ export default function QuizScreen() {
               aria-live="off"
               aria-label={`נותרו ${timeLeft} שניות`}
             >
-              <Clock size={15} aria-hidden="true" />
+              <Clock size={16} aria-hidden="true" />
               {/* Tabular figures: a countdown that reflows every second
                   reads as jitter rather than as time passing. */}
-              <span className="t-numeric font-black text-base" style={{ minWidth: "2ch" }}>
+              <span
+                className="t-numeric font-bold"
+                style={{ minWidth: "2.5ch", fontSize: "1.25rem", letterSpacing: "-0.02em" }}
+              >
                 {timeLeft}
               </span>
             </div>
@@ -309,9 +313,9 @@ export default function QuizScreen() {
             </div>
             {/* Timer ring (if time-limited) */}
             {timeLimit > 0 && (
-              <div className="relative w-6 h-6 flex-shrink-0">
+              <div className="relative w-7 h-7 flex-shrink-0">
                 <svg viewBox="0 0 24 24" className="w-full h-full -rotate-90">
-                  <circle cx="12" cy="12" r="9" fill="none" stroke="var(--muted)" strokeWidth="2.5" />
+                  <circle cx="12" cy="12" r="9" fill="none" stroke="var(--surface-active)" strokeWidth="2.5" />
                   <circle
                     cx="12" cy="12" r="9" fill="none"
                     stroke={timerColor}
