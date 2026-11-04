@@ -17,14 +17,16 @@
     <link rel="apple-touch-icon" href="%BASE_URL%favicon.svg" />
 
     <!-- Open Graph / social previews.
-         No canonical or og:url yet: this app has no production domain.
-         An absolute URL here would have to be guessed, and a guess that
-         lands on someone else's site — closer-simulator.vercel.app is
-         already taken by an unrelated project — hands them our canonical
-         and our share previews. Add both once the real domain exists. -->
+         canonical and og:url are absolute because a share target has no
+         page context to resolve a relative path against. They name the
+         production domain regardless of which preview deployment served
+         the page, so a preview build never competes with production for
+         the canonical. -->
+    <link rel="canonical" href="https://simulator.closera.co.il/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="he_IL" />
     <meta property="og:site_name" content="CLOSER Simulator" />
+    <meta property="og:url" content="https://simulator.closera.co.il/" />
     <meta property="og:title" content="CLOSER Simulator — סימולטור אימון מכירות" />
     <meta
       property="og:description"
