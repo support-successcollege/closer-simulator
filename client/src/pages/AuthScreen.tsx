@@ -13,7 +13,7 @@ import { useLocation } from "wouter";
 import { useApp } from "@/contexts/AppContext";
 import { validatePasswordStrength } from "@/lib/auth";
 import { toast } from "sonner";
-import { Eye, EyeOff, ShieldAlert } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, ShieldAlert } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
 
 type Stage = "credentials" | "rotate-password";
@@ -142,6 +142,15 @@ export default function AuthScreen() {
         style={{ background: "var(--background)" }}
       >
         <div className="w-full max-w-sm lg:max-w-none">
+        <button
+          type="button"
+          onClick={() => setLocation("/")}
+          className="landing-link inline-flex items-center gap-1.5 mb-8 -ms-2 text-sm"
+        >
+          <ArrowRight size={16} aria-hidden="true" />
+          לדף הבית
+        </button>
+
         <div className="mb-10 lg:hidden">
           <Wordmark size="lg" />
         </div>

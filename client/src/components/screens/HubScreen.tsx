@@ -71,7 +71,7 @@ export default function HubScreen() {
           <div className="flex items-end justify-between gap-8 flex-wrap">
             <div className="min-w-0">
               <p className="eyebrow mb-3">CLOSER · לוח אימון</p>
-              <h1 className="t-display mb-2">מוכן לאמן?</h1>
+              <h1 className="t-display mb-2">יום טוב לסגור עסקה</h1>
               <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
                 שלום, {user?.name?.split(" ")[0] ?? "סטודנט"}
                 {" · "}

@@ -47,6 +47,8 @@ Project → Settings → Environment Variables. הגדר לשלוש הסביבו
 | `VITE_ADMIN_PASSWORD` | סיסמה זמנית חזקה | מוחלפת בכפייה בכניסה הראשונה בכל דפדפן |
 | `VITE_STUDENT_EMAIL` | למשל `student@closer.co.il` | כניסת תלמידים. השאר ריק כדי לבטל |
 | `VITE_STUDENT_PASSWORD` | סיסמה משותפת לתלמידים | לא נדרשת החלפה |
+| `VITE_OWNER_EMAIL` | `meir@closera.co.il` | כניסה אישית לבעלים (מנהל). השאר ריק כדי לבטל |
+| `VITE_OWNER_PASSWORD` | סיסמה זמנית חזקה | מוחלפת בכפייה בכניסה הראשונה |
 | `ADMIN_UPLOAD_TOKEN` | `openssl rand -base64 32` | מרשה פרסום מאגר |
 
 **אל תגדיר** `VITE_BASE_PATH` — הוא נועד לתת-נתיב של GitHub Pages ויישבור

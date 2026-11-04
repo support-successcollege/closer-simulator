@@ -87,6 +87,10 @@ const BOOTSTRAP_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "closer-setup-
 const STUDENT_EMAIL = (import.meta.env.VITE_STUDENT_EMAIL || "").trim().toLowerCase();
 const STUDENT_PASSWORD = import.meta.env.VITE_STUDENT_PASSWORD || "";
 
+/** Optional personal login for the owner, to review the simulator. */
+const OWNER_EMAIL = (import.meta.env.VITE_OWNER_EMAIL || "").trim().toLowerCase();
+const OWNER_PASSWORD = import.meta.env.VITE_OWNER_PASSWORD || "";
+
 interface SeedAccount {
   id: string;
   name: string;
@@ -117,6 +121,18 @@ const SEED_ACCOUNTS: SeedAccount[] = [
         password: STUDENT_PASSWORD,
         role: "trainee" as UserRole,
         mustChangePassword: false,
+      }]
+    : []),
+  // A manager login like the bootstrap one, and rotated on first use
+  // for the same reason: its password sits in the bundle.
+  ...(OWNER_EMAIL && OWNER_PASSWORD
+    ? [{
+        id: "u-owner",
+        name: "מאיר",
+        email: OWNER_EMAIL,
+        password: OWNER_PASSWORD,
+        role: "manager" as UserRole,
+        mustChangePassword: true,
       }]
     : []),
 ];

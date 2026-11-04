@@ -345,9 +345,12 @@ export default function QuizScreen() {
             exit={reduceMotion ? { opacity: 0 } : { y: "100%", opacity: 0 }}
             transition={reduceMotion ? fadeOnly : springSheet}
           >
+            {/* `flex`, not the button's own inline-flex: an inline box
+                ignores margin-inline:auto, so .screen-form never centred
+                it and it sat flush against the right edge. */}
             <button
               onClick={nextQuestion}
-              className="btn-primary screen-form w-full text-base"
+              className="btn-primary screen-form flex w-full text-base"
               autoFocus
             >
               {currentQuestionIndex + 1 >= (currentSession?.questions.length ?? 0)

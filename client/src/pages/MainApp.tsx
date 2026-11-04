@@ -41,7 +41,7 @@ export default function MainApp() {
   // Redirect to auth if not authenticated
   useEffect(() => {
     if (!isAuthenticated) {
-      setLocation("/");
+      setLocation("/login");
     }
   }, [isAuthenticated, setLocation]);
 

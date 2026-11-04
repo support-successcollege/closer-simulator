@@ -12,15 +12,17 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { AppProvider } from "./contexts/AppContext";
 import AuthScreen from "./pages/AuthScreen";
+import Landing from "./pages/Landing";
 import MainApp from "./pages/MainApp";
 
 function AppRoutes() {
   return (
     <Switch>
-      <Route path="/" component={AuthScreen} />
+      <Route path="/" component={Landing} />
+      <Route path="/login" component={AuthScreen} />
       <Route path="/app" component={MainApp} />
       <Route path="/app/:screen" component={MainApp} />
-      <Route component={AuthScreen} />
+      <Route component={Landing} />
     </Switch>
   );
 }
