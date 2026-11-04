@@ -155,29 +155,56 @@ location.reload();
 
 ## שלב 6 — חיבור הדומיין simulator.closera.co.il
 
-הדומיין `closera.co.il` כבר מאוכלס ומצביע ל-82.163.176.128. אנחנו
-מוסיפים לו **סאב-דומיין בלבד**, בלי לגעת באתר הקיים.
+ה-DNS של `closera.co.il` מנוהל ב-**iFastNet** (cPanel). אומת:
 
-### ב-Vercel
+```
+closera.co.il  NS → ns10100.ifastnet.com, ns20100.ifastnet.com
+closera.co.il  A  → 82.163.176.128        ← האתר הראשי, לא לגעת
+```
+
+אנחנו מוסיפים **סאב-דומיין בלבד**.
+
+### שלב א — ב-Vercel
 
 Project → Settings → Domains → Add → `simulator.closera.co.il`
 
-Vercel יציג את הרשומה שצריך ליצור וימתין לה.
+Vercel תציג **ערך CNAME ייחודי לפרויקט הזה**, בצורה
+`xxxxxxxxxxxx.vercel-dns-0NN.com`.
 
-### אצל ספק ה-DNS של closera.co.il
+> ⚠️ **אל תשתמש ב-`cname.vercel-dns.com`.** הערך הגנרי הזה מופיע במדריכים
+> ישנים ואינו תקף יותר. Vercel מקצה יעד נפרד לכל פרויקט, ורק הערך שמוצג
+> במסך הזה נכון. העתק אותו משם.
 
-| סוג | שם | ערך |
-|---|---|---|
-| CNAME | `simulator` | `cname.vercel-dns.com` |
+### שלב ב — ב-cPanel של iFastNet
 
-**אל תיגע ברשומת ה-A של `@`** — היא מחזיקה את האתר הראשי.
+**Zone Editor** → ליד `closera.co.il` לחץ **Manage** → **Add Record**
 
-התפשטות ה-DNS לוקחת בדרך כלל דקות, לעיתים עד 24 שעות. Vercel מנפיק
-תעודת SSL אוטומטית ברגע שהרשומה נראית.
+| שדה | ערך |
+|---|---|
+| Type | `CNAME` |
+| Name | `simulator` |
+| TTL | `3600` (או ברירת המחדל) |
+| Record / Value | הערך שהעתקת מ-Vercel |
 
-### אימות
+> ⚠️ **אל תיצור את הסאב-דומיין דרך cPanel → Domains → Subdomains.**
+> המסך הזה יוצר אוטומטית רשומת **A** שמצביעה לשרת השיתופי של iFastNet,
+> והיא תתנגש עם ה-CNAME ותשבור את החיבור. אם כבר נוצרה — מחק אותה
+> ב-Zone Editor לפני הוספת ה-CNAME.
+
+> ⚠️ **אל תיגע ברשומת ה-A של `@`.** היא מחזיקה את האתר הראשי של Closera.
+
+### שלב ג — אימות
 
 ```bash
-dig +short simulator.closera.co.il    # אמור להחזיר CNAME ל-vercel
-curl -I https://simulator.closera.co.il/
+dig +short simulator.closera.co.il CNAME     # אמור להחזיר את יעד Vercel
+curl -I https://simulator.closera.co.il/     # אמור להחזיר 200 ו-SSL תקין
 ```
+
+ההתפשטות לוקחת בדרך כלל דקות; אצל ספקים מסוימים עד 24 שעות. Vercel מנפיקה
+תעודת SSL אוטומטית ברגע שהרשומה נראית לה.
+
+### אם iFastNet חוסם CNAME
+
+בחלק ממסלולי השיתוף Zone Editor מוגבל. במקרה כזה אפשר רשומת **A** לכתובת
+ה-apex של Vercel (`76.76.21.21`) — אבל CNAME עדיף: הוא עוקב אחרי שינויי
+תשתית של Vercel, ורשומת A קופאת על כתובת אחת.
