@@ -70,7 +70,7 @@ export default function HubScreen() {
         <div className="screen-body-wide pt-8 pb-6 px-4 sm:px-6">
           <div className="flex items-end justify-between gap-8 flex-wrap">
             <div className="min-w-0">
-              <p className="eyebrow mb-3">INFINIX · לוח אימון</p>
+              <p className="eyebrow mb-3">CLOSER · לוח אימון</p>
               <h1 className="t-display mb-2">מוכן לאמן?</h1>
               <p className="text-sm" style={{ color: "var(--muted-foreground)" }}>
                 שלום, {user?.name?.split(" ")[0] ?? "סטודנט"}

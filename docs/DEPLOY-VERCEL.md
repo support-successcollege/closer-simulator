@@ -1,6 +1,6 @@
 # פריסה ל-Vercel
 
-המדריך הזה מעלה את INFINIX Simulator ל-Vercel יחד עם **מאגר שאלות משותף**:
+המדריך הזה מעלה את CLOSER Simulator ל-Vercel יחד עם **מאגר שאלות משותף**:
 מנהל מעלה קובץ JSON פעם אחת, וכל התלמידים רואים אותו — בלי לגעת בקוד ובלי
 לפרוס מחדש.
 
@@ -45,7 +45,7 @@ Project → Settings → Environment Variables. הגדר לשלוש הסביבו
 |---|---|---|
 | `VITE_ADMIN_EMAIL` | המייל של המנהל | חשבון המנהל |
 | `VITE_ADMIN_PASSWORD` | סיסמה זמנית חזקה | מוחלפת בכפייה בכניסה הראשונה בכל דפדפן |
-| `VITE_STUDENT_EMAIL` | למשל `student@infinix.org.il` | כניסת תלמידים. השאר ריק כדי לבטל |
+| `VITE_STUDENT_EMAIL` | למשל `student@closer.co.il` | כניסת תלמידים. השאר ריק כדי לבטל |
 | `VITE_STUDENT_PASSWORD` | סיסמה משותפת לתלמידים | לא נדרשת החלפה |
 | `ADMIN_UPLOAD_TOKEN` | `openssl rand -base64 32` | מרשה פרסום מאגר |
 

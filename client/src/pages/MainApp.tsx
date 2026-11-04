@@ -1,5 +1,5 @@
 /* ============================================================
-   MainApp — INFINIX app shell
+   MainApp — CLOSER app shell
    Sidebar + main content area, full-viewport, no body scroll, RTL.
 
    Screen changes are spring transitions rather than a keyframe on

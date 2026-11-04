@@ -15,7 +15,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useApp } from "@/contexts/AppContext";
 import { fadeOnly, springSettle, springSheet } from "@/lib/motion";
-import { ChevronLeft, Clock, AlertTriangle, CheckCircle2, XCircle, FlaskConical } from "lucide-react";
+import { ChevronLeft, Clock, AlertTriangle, CheckCircle2, XCircle, FlaskConical, Lightbulb } from "lucide-react";
 
 /** Fallback padding used until the chrome has been measured. */
 const CHROME_TOP_FALLBACK = 92;
@@ -231,6 +231,8 @@ export default function QuizScreen() {
               isCorrect={lastAnswer.isCorrect}
               selectedAnswer={currentQuestion.options[lastAnswer.selectedIndex] || ""}
               correctAnswer={currentQuestion.options[currentQuestion.correctIndex]}
+              explanation={currentQuestion.explanation}
+              coach={currentQuestion.coach}
             />
           )}
         </div>
@@ -358,10 +360,14 @@ export default function QuizScreen() {
 
 // ── Feedback Box ──────────────────────────────────────────────
 
-function FeedbackBox({ isCorrect, selectedAnswer, correctAnswer }: {
+function FeedbackBox({ isCorrect, selectedAnswer, correctAnswer, explanation, coach }: {
   isCorrect: boolean;
   selectedAnswer: string;
   correctAnswer: string;
+  /** Why that answer is right. Empty on banks that carry no teaching text. */
+  explanation?: string;
+  /** A practical tip from the trainer. Optional, same reason. */
+  coach?: string;
 }) {
   const verdictColor = isCorrect ? "var(--success)" : "var(--destructive)";
 
@@ -399,6 +405,33 @@ function FeedbackBox({ isCorrect, selectedAnswer, correctAnswer }: {
           </span>
         </div>
       </div>
+
+      {/* The teaching half of the feedback. A bank may carry neither,
+          so each renders only when it has something to say. */}
+      {explanation && (
+        <div className="mt-4">
+          <div className="eyebrow mb-1.5" style={{ color: "var(--muted-foreground)" }}>למה</div>
+          <p className="text-sm leading-relaxed" style={{ color: "var(--foreground)" }}>
+            {explanation}
+          </p>
+        </div>
+      )}
+
+      {coach && (
+        <div
+          className="mt-4 flex items-start gap-2 p-3"
+          style={{
+            background: "var(--tint-accent-weak, color-mix(in srgb, var(--accent) 8%, transparent))",
+            borderInlineStart: "2px solid var(--accent)",
+          }}
+        >
+          <Lightbulb size={15} style={{ color: "var(--accent)", flexShrink: 0, marginTop: 2 }} aria-hidden="true" />
+          <div>
+            <div className="eyebrow mb-1" style={{ color: "var(--accent)" }}>הערת מאמן</div>
+            <p className="text-sm leading-relaxed" style={{ color: "var(--foreground)" }}>{coach}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

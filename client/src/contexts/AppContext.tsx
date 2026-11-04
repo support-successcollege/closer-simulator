@@ -81,7 +81,7 @@ export type {
 const BOOTSTRAP_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || "support@successcollege.co.il")
   .trim()
   .toLowerCase();
-const BOOTSTRAP_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "infinix-setup-2024";
+const BOOTSTRAP_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || "closer-setup-2026";
 
 /** Optional shared trainee credential, so students can sign in at all. */
 const STUDENT_EMAIL = (import.meta.env.VITE_STUDENT_EMAIL || "").trim().toLowerCase();

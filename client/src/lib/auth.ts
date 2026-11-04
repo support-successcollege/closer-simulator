@@ -2,7 +2,7 @@
    auth.ts — Client-side credential hashing
 
    IMPORTANT — read this before trusting it with anything:
-   INFINIX ships as a static site (GitHub Pages). There is no
+   CLOSER ships as a static site (GitHub Pages). There is no
    server, so every check here runs on the visitor's own machine
    and can be bypassed by anyone willing to open DevTools.
 

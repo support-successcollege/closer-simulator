@@ -1,5 +1,5 @@
 /* ============================================================
-   Sidebar — INFINIX navigation
+   Sidebar — CLOSER navigation
 
    The active indicator is one shared pill that travels between
    items rather than a background that cross-fades in place: the

@@ -91,7 +91,7 @@ describe("createCredential / verifyPassword", () => {
 
 describe("validatePasswordStrength", () => {
   it("accepts a password with 8+ chars, a letter and a digit", () => {
-    expect(validatePasswordStrength("infinix2024")).toBeNull();
+    expect(validatePasswordStrength("closer2026")).toBeNull();
   });
 
   it("rejects short passwords", () => {
